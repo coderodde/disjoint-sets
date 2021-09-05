@@ -17,6 +17,7 @@ import com.github.coderodde.util.disjointset.DisjointSetUnionByRankComputer;
 import com.github.coderodde.util.disjointset.DisjointSetUnionBySizeComputer;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.Collections;
 
 public class Benchmark {
 
@@ -28,6 +29,8 @@ public class Benchmark {
     
     private final List<UndirectedGraphNode> graph;
     private final WeightFunction weightFunction;
+    
+    private final List<Result> results = new ArrayList<>(8);
     
     public Benchmark(long seed) {
         Random random = new Random(seed);
@@ -55,6 +58,8 @@ public class Benchmark {
             originalPrintStream = directOutToNowhere();
         }
         
+        String configMessage;
+        
         for (AbstractDisjointSetRootFinder<UndirectedGraphNode> rootFinder :
                 getRootFinders()) {
             for (AbstractDisjointSetUnionComputer<UndirectedGraphNode> 
@@ -62,13 +67,19 @@ public class Benchmark {
                 
                 bar();
                 
-                System.out.println(
+                configMessage =
                         "Root finder: " + 
                                 rootFinder.getClass().getSimpleName() + 
                                 ", union computer: " + 
-                                unionComputer.getClass().getSimpleName());
+                                unionComputer.getClass().getSimpleName();
                 
-                runKruskalsAlgorithm(rootFinder, unionComputer);
+                System.out.println(configMessage);
+                
+                long duration = runKruskalsAlgorithm(rootFinder, unionComputer);
+
+                if (runType.equals(RunType.BENCHMARKING)) {
+                    this.results.add(new Result(configMessage, duration));
+                }
             }
         }
 
@@ -77,7 +88,7 @@ public class Benchmark {
         }
     }
     
-    private void runKruskalsAlgorithm(
+    private long runKruskalsAlgorithm(
             AbstractDisjointSetRootFinder<UndirectedGraphNode> rootFinder,
             AbstractDisjointSetUnionComputer
                     <UndirectedGraphNode> unionComputer) {
@@ -99,6 +110,8 @@ public class Benchmark {
                 "Duration: " + duration + " ms. Total edges: " + 
                         data.edges.size() + ". Total weight: " + 
                         data.totalWeight + ".");
+        
+        return duration;
     }
     
     private enum RunType {
@@ -112,6 +125,20 @@ public class Benchmark {
         Benchmark benchmark = new Benchmark(seed);
         benchmark.run(RunType.WARMING_UP);
         benchmark.run(RunType.BENCHMARKING);
+        bar();
+        Collections.sort(benchmark.results);
+        benchmark.printResults();
+    }
+    
+    private void printResults() {
+        int i = 1;
+        
+        for (Result result : results) {
+            System.out.println(
+                    i + ". " + result.configMessage + ", " + result.duration + 
+                            " milliseconds.");
+            i++;
+        }
     }
     
     private static PrintStream directOutToNowhere() {
@@ -206,5 +233,27 @@ public class Benchmark {
          
     private static void bar() {
         System.out.println(BAR);
+    }
+    
+    private static final class Result implements Comparable<Result> {
+        
+        final String configMessage;
+        final long duration;
+        
+        Result(String configMessage, long duration) {
+            this.configMessage = configMessage;
+            this.duration = duration;
+        }
+        
+        @Override
+        public int compareTo(Result other) {
+            return Long.compare(duration, other.duration);
+        }
+        
+        @Override
+        public String toString() {
+            return configMessage + ", duration = " + 
+                    duration + " milliseconds.";
+        }
     }
 }
