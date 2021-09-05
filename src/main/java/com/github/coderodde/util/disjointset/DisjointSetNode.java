@@ -33,6 +33,7 @@ final class DisjointSetNode<E> {
     
     public DisjointSetNode(E item) {
         this.item = item;;
+        this.parent = this; 
     }
     
     public E getItem() {

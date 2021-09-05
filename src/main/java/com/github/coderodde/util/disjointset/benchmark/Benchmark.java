@@ -20,16 +20,29 @@ import java.io.PrintStream;
 
 public class Benchmark {
 
-    private static final int SIZE = 100000;
+    private static final int SIZE = 100_000;
     private static final float EDGE_LOAD_FACTOR = 15.0f;
-
+    private static final int BAR_LENGTH = 80;
+    
+    private static final String BAR = buildBar();
+    
     private final List<UndirectedGraphNode> graph;
     private final WeightFunction weightFunction;
     
     public Benchmark(long seed) {
         Random random = new Random(seed);
+        
+        long startTime = System.currentTimeMillis();
+        
         Pair<List<UndirectedGraphNode>, WeightFunction> data
                 = createRandomGraph(SIZE, EDGE_LOAD_FACTOR, random);
+        
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        
+        System.out.println(
+                "The benchmark graph is built in " + duration +
+                        " milliseconds.\n");
         
         this.graph = data.first;
         this.weightFunction = data.second;
@@ -47,8 +60,10 @@ public class Benchmark {
             for (AbstractDisjointSetUnionComputer<UndirectedGraphNode> 
                     unionComputer : getUnionComputers()) {
                 
+                bar();
+                
                 System.out.println(
-                        " Root finder: " + 
+                        "Root finder: " + 
                                 rootFinder.getClass().getSimpleName() + 
                                 ", union computer: " + 
                                 unionComputer.getClass().getSimpleName());
@@ -177,5 +192,19 @@ public class Benchmark {
         unionComputers.add(new DisjointSetUnionBySizeComputer<>());
         
         return unionComputers;
+    }
+         
+    private static String buildBar() {
+        StringBuilder sb = new StringBuilder(BAR_LENGTH);
+        
+        for (int i = 0; i < BAR_LENGTH; i++) {
+            sb.append('.');
+        }
+        
+        return sb.toString();
+    }
+         
+    private static void bar() {
+        System.out.println(BAR);
     }
 }
