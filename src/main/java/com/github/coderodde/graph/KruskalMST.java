@@ -1,6 +1,5 @@
 package com.github.coderodde.graph;
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,15 +13,28 @@ public final class KruskalMST {
         this.disjointSet = disjointSet;
     }
 
-    public List<UndirectedGraphEdge> 
-        findMinimumSpanningTree(final List<UndirectedGraphNode> graph,
-                                final WeightFunction weightFunction) {
+    public static final class Data {
+        public final List<UndirectedGraphEdge> edges;
+        public final double totalWeight;
+        
+        Data(List<UndirectedGraphEdge> edges, double totalWeight) {
+            this.edges = edges;
+            this.totalWeight = totalWeight;
+        }
+    }
+    
+    public Data 
+        findMinimumSpanningTree(List<UndirectedGraphNode> graph,
+                                WeightFunction weightFunction) {
+            
         List<UndirectedGraphEdge> edges = 
                 prepareEdgeList(graph, weightFunction);
 
         List<UndirectedGraphEdge> minimumSpanningTree = 
                 new ArrayList<>();
 
+        double totalWeight = 0.0;
+        
         for (final UndirectedGraphEdge edge : edges) {
             UndirectedGraphNode u = edge.firstNode();
             UndirectedGraphNode v = edge.secondNode();
@@ -33,10 +45,12 @@ public final class KruskalMST {
             if (root1 != root2) {
                 this.disjointSet.union(root1, root2);
                 minimumSpanningTree.add(edge);
+                totalWeight += 
+                        weightFunction.get(edge.firstNode(), edge.secondNode());
             }
         }
 
-        return minimumSpanningTree;
+        return new Data(edges, totalWeight);
     }
 
     private List<UndirectedGraphEdge>

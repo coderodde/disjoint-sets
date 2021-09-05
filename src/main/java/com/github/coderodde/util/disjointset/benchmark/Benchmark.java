@@ -1,13 +1,14 @@
 package com.github.coderodde.util.disjointset.benchmark;
 
+import com.github.coderodde.graph.KruskalMST;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import com.github.coderodde.graph.UndirectedGraphEdge;
 import com.github.coderodde.graph.UndirectedGraphNode;
 import com.github.coderodde.graph.WeightFunction;
 import com.github.coderodde.util.disjointset.AbstractDisjointSetRootFinder;
 import com.github.coderodde.util.disjointset.AbstractDisjointSetUnionComputer;
+import com.github.coderodde.util.disjointset.DisjointSet;
 import com.github.coderodde.util.disjointset.DisjointSetIterativePathCompressionNodeFinder;
 import com.github.coderodde.util.disjointset.DisjointSetPathHalvingNodeFinder;
 import com.github.coderodde.util.disjointset.DisjointSetPathSplittingNodeFinder;
@@ -44,22 +45,45 @@ public class Benchmark {
         for (AbstractDisjointSetRootFinder<UndirectedGraphNode> rootFinder :
                 getRootFinders()) {
             for (AbstractDisjointSetUnionComputer<UndirectedGraphNode> 
-                    unionComputers : getUnionComputers()) {
+                    unionComputer : getUnionComputers()) {
                 
                 System.out.println(
                         " Root finder: " + 
                                 rootFinder.getClass().getSimpleName() + 
                                 ", union computer: " + 
-                                unionComputers.getClass().getSimpleName());
+                                unionComputer.getClass().getSimpleName());
                 
-                
+                runKruskalsAlgorithm(rootFinder, unionComputer);
             }
         }
 
         if (originalPrintStream != null) {
             System.setOut(originalPrintStream);
-            
         }
+    }
+    
+    private void runKruskalsAlgorithm(
+            AbstractDisjointSetRootFinder<UndirectedGraphNode> rootFinder,
+            AbstractDisjointSetUnionComputer
+                    <UndirectedGraphNode> unionComputer) {
+        
+        DisjointSet<UndirectedGraphNode> disjointSet = 
+                new DisjointSet<>(rootFinder, unionComputer);
+        
+        KruskalMST mst = new KruskalMST(disjointSet);
+        
+        long startTime = System.currentTimeMillis();
+            
+        KruskalMST.Data data = 
+                mst.findMinimumSpanningTree(graph, weightFunction);
+        
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
+        
+        System.out.println(
+                "Duration: " + duration + " ms. Total edges: " + 
+                        data.edges.size() + ". Total weight: " + 
+                        data.totalWeight + ".");
     }
     
     private enum RunType {
