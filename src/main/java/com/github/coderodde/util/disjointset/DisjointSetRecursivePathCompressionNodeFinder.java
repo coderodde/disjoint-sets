@@ -9,7 +9,7 @@ package com.github.coderodde.util.disjointset;
  * @since 1.6 (Sep 5, 2021)
  */
 public final class DisjointSetRecursivePathCompressionNodeFinder<E>
-extends DisjointSetRootFinder<E> {
+extends AbstractDisjointSetRootFinder<E> {
     
     @Override
     public E find(E item) {

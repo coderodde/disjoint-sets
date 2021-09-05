@@ -4,7 +4,7 @@ package com.github.coderodde.util.disjointset;
  *
  * @author rodde
  */
-public abstract class DisjointSetUnionComputer<E> {
+public abstract class AbstractDisjointSetUnionComputer<E> {
     
     DisjointSet<E> ownerDisjointSet;
     

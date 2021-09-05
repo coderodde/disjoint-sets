@@ -20,12 +20,12 @@ public final class DisjointSet<E> {
     /**
      * The disjoint set root finder.
      */
-    private final DisjointSetRootFinder<E> disjointSetRootFinder;
+    private final AbstractDisjointSetRootFinder<E> disjointSetRootFinder;
     
     /**
      * The disjoint set operation provider.
      */
-    private final DisjointSetUnionComputer<E> disjointSetUnionComputer;
+    private final AbstractDisjointSetUnionComputer<E> disjointSetUnionComputer;
     
     /**
      * Constructs a disjoint-set data structure with specific operation 
@@ -37,8 +37,8 @@ public final class DisjointSet<E> {
      * @param disjointSetUnionComputer the union operation implementation 
      * object.
      */
-    public DisjointSet(DisjointSetRootFinder<E> disjointSetRootFinder,
-                       DisjointSetUnionComputer<E> disjointSetUnionComputer) {
+    public DisjointSet(AbstractDisjointSetRootFinder<E> disjointSetRootFinder,
+                       AbstractDisjointSetUnionComputer<E> disjointSetUnionComputer) {
         
         this.disjointSetRootFinder = 
                 Objects.requireNonNull(

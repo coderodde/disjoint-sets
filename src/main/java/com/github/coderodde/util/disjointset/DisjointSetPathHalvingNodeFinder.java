@@ -5,7 +5,7 @@ package com.github.coderodde.util.disjointset;
  * @author rodde
  */
 public final class DisjointSetPathHalvingNodeFinder<E>
-extends DisjointSetRootFinder<E> {
+extends AbstractDisjointSetRootFinder<E> {
 
     @Override
     public E find(E item) {

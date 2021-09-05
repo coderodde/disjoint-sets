@@ -4,7 +4,7 @@ package com.github.coderodde.util.disjointset;
  *
  * @author rodde
  */
-public abstract class DisjointSetRootFinder<E> {
+public abstract class AbstractDisjointSetRootFinder<E> {
     
     DisjointSet<E> ownerDisjointSet;
     
@@ -17,6 +17,4 @@ public abstract class DisjointSetRootFinder<E> {
      * @return the root of the tree to which {@code item} belongs to.
      */
     public abstract E find(E item);
-    
-    
 }

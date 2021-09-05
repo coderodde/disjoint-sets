@@ -5,7 +5,7 @@ package com.github.coderodde.util.disjointset;
  * @author rodde
  */
 public final class DisjointSetUnionBySizeComputer<E>
-extends DisjointSetUnionComputer<E> {
+extends AbstractDisjointSetUnionComputer<E> {
 
     @Override
     public void union(E item1, E item2) {
