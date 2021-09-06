@@ -120,7 +120,7 @@ public class Benchmark {
     }
     
     public static void main(final String... args) {
-        long seed = System.currentTimeMillis();
+        long seed = 1630845583522L; // System.currentTimeMillis();
         System.out.println("Seed: " + seed);
         Benchmark benchmark = new Benchmark(seed);
         benchmark.run(RunType.WARMING_UP);
@@ -189,7 +189,7 @@ public class Benchmark {
             final UndirectedGraphNode u = choose(graph, rnd);
             final UndirectedGraphNode v = choose(graph, rnd);
             u.connectTo(v);
-            wf.put(u, v, 10.0 * rnd.nextDouble() - 5.0);
+            wf.put(u, v, rnd.nextDouble());
             --edges;
         }
 

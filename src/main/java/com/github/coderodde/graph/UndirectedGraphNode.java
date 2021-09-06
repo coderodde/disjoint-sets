@@ -30,6 +30,7 @@ public class UndirectedGraphNode implements Iterable<UndirectedGraphNode> {
         neighbor.neighbors.remove(this);
     }
 
+    @Override
     public boolean equals(final Object obj) {
         if (!(obj instanceof UndirectedGraphNode)) {
             return false;

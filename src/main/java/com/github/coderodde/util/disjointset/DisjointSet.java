@@ -14,19 +14,19 @@ import java.util.Objects;
  * @since 1.6 (Sep 5, 2021).
  */
 public final class DisjointSet<E> {
-    
+
     private final Map<E, DisjointSetNode<E>> disjointSetMap = new HashMap<>();
-    
+
     /**
      * The disjoint set root finder.
      */
     private final AbstractDisjointSetRootFinder<E> disjointSetRootFinder;
-    
+
     /**
      * The disjoint set operation provider.
      */
     private final AbstractDisjointSetUnionComputer<E> disjointSetUnionComputer;
-    
+
     /**
      * Constructs a disjoint-set data structure with specific operation 
      * implementations.
@@ -39,21 +39,21 @@ public final class DisjointSet<E> {
      */
     public DisjointSet(AbstractDisjointSetRootFinder<E> disjointSetRootFinder,
                        AbstractDisjointSetUnionComputer<E> disjointSetUnionComputer) {
-        
+
         this.disjointSetRootFinder = 
                 Objects.requireNonNull(
                         disjointSetRootFinder, 
                         "The input DisjointSetRootFinder is null.");
-        
+
         this.disjointSetUnionComputer = 
                 Objects.requireNonNull(
                         disjointSetUnionComputer, 
                         "The input DisjointSetUnionComputer is null.");
-        
+
         this.disjointSetRootFinder.ownerDisjointSet = this;
         this.disjointSetUnionComputer.ownerDisjointSet = this;
     }
-    
+
     /**
      * Finds the root of the tree to which {@code item} belongs to.
      * 
@@ -63,7 +63,7 @@ public final class DisjointSet<E> {
     public E find(E item) {
         return disjointSetRootFinder.find(item);
     }
-    
+
     /**
      * Unites the two trees into one, unless the two items already belong to the
      * same tree.
@@ -74,23 +74,23 @@ public final class DisjointSet<E> {
     public void union(E item1, E item2) {
         disjointSetUnionComputer.union(item1, item2);
     }
-    
+
     DisjointSetNode<E> find(DisjointSetNode<E> node) {
         if (node == node.getParent()) {
             return node;
         }
-        
+
         return find(node.getParent());
     }
-    
+
     DisjointSetNode<E> getNode(E item) {
         DisjointSetNode<E> node = disjointSetMap.get(item);
-        
+
         if (node == null) {
-            node = new DisjointSetNode<E>(item);
+            node = new DisjointSetNode<>(item);
             disjointSetMap.put(item, node);
         }
-        
+
         return node;
     }
 }

@@ -7,35 +7,35 @@ package com.github.coderodde.util.disjointset;
  * @version 1.6 (Sep 4, 2021)
  * @since 1.6 (Sep 4, 2021)
  */
-final class DisjointSetNode<E> {
-    
+public final class DisjointSetNode<E> {
+
     /**
      * The actual item being held.
      */
     private final E item;
-    
+
     /**
      * The parent node of this node.
      */
     private DisjointSetNode<E> parent;
- 
+
     /**
      * The rank of this node. The rank of a node is its maximum height from any
      * leaf node.
      */
     private int rank;
-    
+
     /**
      * The size of this node. The size of a node is the number of nodes under
      * it.
      */
     private int size;
-    
+
     public DisjointSetNode(E item) {
         this.item = item;;
         this.parent = this; 
     }
-    
+
     public E getItem() {
         return item;
     }
@@ -51,12 +51,12 @@ final class DisjointSetNode<E> {
     public int getSize() {
         return size;
     }
-    
+
     @Override
     public String toString() {
         return "[" + item + "]";
     }
-    
+
     void setParent(DisjointSetNode<E> parent) {
         this.parent = parent;
     }

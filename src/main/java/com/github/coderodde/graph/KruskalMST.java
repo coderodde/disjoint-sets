@@ -30,12 +30,11 @@ public final class KruskalMST {
         List<UndirectedGraphEdge> edges = 
                 prepareEdgeList(graph, weightFunction);
 
-        List<UndirectedGraphEdge> minimumSpanningTree = 
-                new ArrayList<>();
-
+        List<UndirectedGraphEdge> minimumSpanningTree = new ArrayList<>();
+                
         double totalWeight = 0.0;
         
-        for (final UndirectedGraphEdge edge : edges) {
+        for (UndirectedGraphEdge edge : edges) {
             UndirectedGraphNode u = edge.firstNode();
             UndirectedGraphNode v = edge.secondNode();
 
