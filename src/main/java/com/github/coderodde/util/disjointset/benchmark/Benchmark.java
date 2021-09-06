@@ -9,10 +9,10 @@ import com.github.coderodde.graph.WeightFunction;
 import com.github.coderodde.util.disjointset.AbstractDisjointSetRootFinder;
 import com.github.coderodde.util.disjointset.AbstractDisjointSetUnionComputer;
 import com.github.coderodde.util.disjointset.DisjointSet;
-import com.github.coderodde.util.disjointset.DisjointSetIterativePathCompressionNodeFinder;
-import com.github.coderodde.util.disjointset.DisjointSetPathHalvingNodeFinder;
-import com.github.coderodde.util.disjointset.DisjointSetPathSplittingNodeFinder;
-import com.github.coderodde.util.disjointset.DisjointSetRecursivePathCompressionNodeFinder;
+import com.github.coderodde.util.disjointset.DisjointSetIterativePathCompressionRootFinder;
+import com.github.coderodde.util.disjointset.DisjointSetPathHalvingRootFinder;
+import com.github.coderodde.util.disjointset.DisjointSetPathSplittingRootFinder;
+import com.github.coderodde.util.disjointset.DisjointSetRecursivePathCompressionRootFinder;
 import com.github.coderodde.util.disjointset.DisjointSetUnionByRankComputer;
 import com.github.coderodde.util.disjointset.DisjointSetUnionBySizeComputer;
 import java.io.OutputStream;
@@ -201,10 +201,10 @@ public class Benchmark {
         List<AbstractDisjointSetRootFinder<UndirectedGraphNode>> rootFinders = 
                 new ArrayList<>();
         
-        rootFinders.add(new DisjointSetRecursivePathCompressionNodeFinder<>());
-        rootFinders.add(new DisjointSetIterativePathCompressionNodeFinder<>());
-        rootFinders.add(new DisjointSetPathHalvingNodeFinder<>());
-        rootFinders.add(new DisjointSetPathSplittingNodeFinder<>());
+        rootFinders.add(new DisjointSetRecursivePathCompressionRootFinder<>());
+        rootFinders.add(new DisjointSetIterativePathCompressionRootFinder<>());
+        rootFinders.add(new DisjointSetPathHalvingRootFinder<>());
+        rootFinders.add(new DisjointSetPathSplittingRootFinder<>());
        
         return rootFinders;
     }

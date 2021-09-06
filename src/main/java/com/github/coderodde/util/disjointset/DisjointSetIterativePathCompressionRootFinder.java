@@ -10,7 +10,7 @@ package com.github.coderodde.util.disjointset;
  * @version 1.6 (Sep 5, 2021)
  * @since 1.6 (Sep 5, 2021)
  */
-public final class DisjointSetIterativePathCompressionNodeFinder<E>
+public final class DisjointSetIterativePathCompressionRootFinder<E>
 extends AbstractDisjointSetRootFinder<E> {
 
     /**

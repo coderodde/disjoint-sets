@@ -23,7 +23,7 @@ public final class DisjointSet<E> {
     private final AbstractDisjointSetRootFinder<E> disjointSetRootFinder;
 
     /**
-     * The disjoint set operation provider.
+     * The disjoint set union operation provider.
      */
     private final AbstractDisjointSetUnionComputer<E> disjointSetUnionComputer;
 

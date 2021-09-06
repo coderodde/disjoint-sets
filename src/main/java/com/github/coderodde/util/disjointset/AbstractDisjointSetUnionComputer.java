@@ -11,7 +11,7 @@ package com.github.coderodde.util.disjointset;
  */
 public abstract class AbstractDisjointSetUnionComputer<E> {
 
-    DisjointSet<E> ownerDisjointSet;
+    protected DisjointSet<E> ownerDisjointSet;
 
     /**
      * If both {@code item1} and {@code item2} belong to the same tree, does 

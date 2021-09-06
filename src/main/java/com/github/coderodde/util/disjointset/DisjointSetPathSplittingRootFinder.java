@@ -1,29 +1,30 @@
 package com.github.coderodde.util.disjointset;
 
 /**
+ *
  * This class implements the root finding algorithm for the disjoint-set data
- * structure using recursive path compression.
+ * structure using path splitting.
+ * 
+ * @param <E> the satellite data type.
  * 
  * @author Rodion "rodde" Efremov
  * @version 1.6 (Sep 5, 2021)
  * @since 1.6 (Sep 5, 2021)
  */
-public final class DisjointSetRecursivePathCompressionNodeFinder<E>
+public final class DisjointSetPathSplittingRootFinder<E>
 extends AbstractDisjointSetRootFinder<E> {
 
-    /**
-     * {@inheritDoc }
-     */
     @Override
     public E find(E item) {
-        DisjointSetNode<E> node = 
+        DisjointSetNode<E> node =
                 ownerDisjointSet.find(ownerDisjointSet.getNode(item));
 
-        if (node == node.getParent()) {
-            return node.getItem();
+        while (node.getParent() != node) {
+            DisjointSetNode<E> parent = node.getParent();
+            node.setParent(parent.getParent());
+            node = parent;
         }
 
-        node.setParent(ownerDisjointSet.find(node.getParent()));
-        return node.getParent().getItem();
+        return node.getItem();
     }
 }
