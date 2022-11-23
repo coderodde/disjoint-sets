@@ -10,6 +10,7 @@ import com.github.coderodde.util.disjointset.AbstractDisjointSetRootFinder;
 import com.github.coderodde.util.disjointset.AbstractDisjointSetUnionComputer;
 import com.github.coderodde.util.disjointset.DisjointSet;
 import com.github.coderodde.util.disjointset.DisjointSetIterativePathCompressionRootFinder;
+import com.github.coderodde.util.disjointset.DisjointSetNonCompressingRootFinder;
 import com.github.coderodde.util.disjointset.DisjointSetPathHalvingRootFinder;
 import com.github.coderodde.util.disjointset.DisjointSetPathSplittingRootFinder;
 import com.github.coderodde.util.disjointset.DisjointSetRecursivePathCompressionRootFinder;
@@ -201,6 +202,7 @@ public class Benchmark {
         List<AbstractDisjointSetRootFinder<UndirectedGraphNode>> rootFinders = 
                 new ArrayList<>();
         
+        rootFinders.add(new DisjointSetNonCompressingRootFinder<>());
         rootFinders.add(new DisjointSetRecursivePathCompressionRootFinder<>());
         rootFinders.add(new DisjointSetIterativePathCompressionRootFinder<>());
         rootFinders.add(new DisjointSetPathHalvingRootFinder<>());
